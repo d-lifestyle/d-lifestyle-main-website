@@ -100,7 +100,7 @@ export const Home = () => {
           <DefaultLayout pageTitle="Best travel agency in India">
                <div className="flex gap-5 justify-center bg-gray-100 py-8 flex-wrap">
                     {categories?.data?.length !== 0 &&
-                         categories.data.map(({ name, _id }: CategoriesProps) => (
+                         categories.data?.map(({ name, _id }: CategoriesProps) => (
                               <h6
                                    key={_id}
                                    className="cursor-pointer bg-white px-5 py-2 rounded-md uppercase hover:text-primary-500 text-sm border-2 duration-300 hover:border-primary-500"
@@ -111,7 +111,7 @@ export const Home = () => {
                </div>
                <OwlCarousel items={1} autoplay className="owl-theme" loop margin={10} nav>
                     {carousel.data.length &&
-                         carousel.data.map(({ dataAlt, dataImage }: CarouselProps, i: number) => (
+                         carousel.data?.map(({ dataAlt, dataImage }: CarouselProps, i: number) => (
                               <CarouselItem key={i} image={dataImage} altText={dataAlt} />
                          ))}
                </OwlCarousel>
@@ -131,7 +131,7 @@ export const Home = () => {
                          <div className="grid grid-cols-12 gap-8 mt-5 justify-center">
                               {accommodation.data.length !== 0 &&
                                    accommodation.data
-                                        .map(({ SubCategory, city, displayName, state, _id }: AccommodationProps) => (
+                                        ?.map(({ SubCategory, city, displayName, state, _id }: AccommodationProps) => (
                                              <div
                                                   key={_id}
                                                   className="col-span-12 xl:col-span-3 lg:col-span-3 md:col-span-6 sm:col-span-12"
@@ -179,7 +179,7 @@ export const Home = () => {
                          </div>
                          <div className="grid grid-cols-12 gap-5 mt-5">
                               {toursTravels.data.length !== 0 &&
-                                   toursTravels.data
+                                   toursTravels?.data
                                         .map(
                                              ({
                                                   SubCategory,

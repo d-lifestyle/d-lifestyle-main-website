@@ -38,7 +38,7 @@ export const Navbar: FC<NavBarProps> = ({ NavLinks, logo, logoType }) => {
                          id="example-navbar-danger"
                     >
                          <ul className="flex flex-col lg:flex-row list-none lg:ml-auto gap-3 items-center">
-                              {NavLinks.map(({ displayText, path }, i) => (
+                              {NavLinks?.map(({ displayText, path }, i) => (
                                    <li
                                         className="px-3 py-2 flex items-center text-sm uppercase font-bold leading-snug rounded-md text-white hover:opacity-75 hover:text-gray-50"
                                         key={i}
