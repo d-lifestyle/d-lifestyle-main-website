@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from "react";
+import React, { useLayoutEffect } from "react";
 
 import { DefaultLayout } from "../../layout";
 import OwlCarousel from "react-owl-carousel";
@@ -191,47 +191,37 @@ export const Home = () => {
                          <div className="grid grid-cols-12 gap-5 mt-5">
                               {toursTravels.data.length !== 0 &&
                                    toursTravels?.data
-                                        .map(
-                                             ({
-                                                  SubCategory,
-                                                  displayName,
-                                                  place,
-                                                  code,
-                                                  duration,
-                                                  theme,
-                                                  _id,
-                                             }: ToursTravelProps) => (
-                                                  <div
-                                                       key={_id}
-                                                       className="col-span-12 xl:col-span-3 lg:col-span-3 md:col-span-6 sm:col-span-12"
-                                                  >
-                                                       <div className="bg-white rounded-md group border-transparent border-2 hover:border-opacity-50 hover:border-secondary-500 hover:shadow-xl duration-300 cursor-pointer">
-                                                            <img
-                                                                 src="https://images.pexels.com/photos/14613200/pexels-photo-14613200.jpeg"
-                                                                 alt={displayName}
-                                                            />
-                                                            <div className="px-3 py-2">
-                                                                 <h6 className="text-xl capitalize group-hover:text-secondary-500 truncate">
-                                                                      {displayName}
-                                                                 </h6>
-                                                                 <p className="font-semibold">For : {duration}</p>
-                                                                 <button
-                                                                      type="button"
-                                                                      className="flex gap-3 items-center my-3"
-                                                                 >
-                                                                      <MdShareLocation />
+                                        .map(({ SubCategory, displayName, place, duration, _id }: ToursTravelProps) => (
+                                             <div
+                                                  key={_id}
+                                                  className="col-span-12 xl:col-span-3 lg:col-span-3 md:col-span-6 sm:col-span-12"
+                                             >
+                                                  <div className="bg-white rounded-md group border-transparent border-2 hover:border-opacity-50 hover:border-secondary-500 hover:shadow-xl duration-300 cursor-pointer">
+                                                       <img
+                                                            src="https://images.pexels.com/photos/14613200/pexels-photo-14613200.jpeg"
+                                                            alt={displayName}
+                                                       />
+                                                       <div className="px-3 py-2">
+                                                            <h6 className="text-xl capitalize group-hover:text-secondary-500 truncate">
+                                                                 {displayName}
+                                                            </h6>
+                                                            <p className="font-semibold">For : {duration}</p>
+                                                            <button
+                                                                 type="button"
+                                                                 className="flex gap-3 items-center my-3"
+                                                            >
+                                                                 <MdShareLocation />
 
-                                                                      <p className="text-gray-500 uppercase font-semibold">
-                                                                           {SubCategory.name},{" "}
-                                                                           {SubCategory?.CategoryId?.name}
-                                                                      </p>
-                                                                 </button>
-                                                                 <p className="text-gray-500 capitalize">{place}</p>
-                                                            </div>
+                                                                 <p className="text-gray-500 uppercase font-semibold">
+                                                                      {SubCategory.name},{" "}
+                                                                      {SubCategory?.CategoryId?.name}
+                                                                 </p>
+                                                            </button>
+                                                            <p className="text-gray-500 capitalize">{place}</p>
                                                        </div>
                                                   </div>
-                                             )
-                                        )
+                                             </div>
+                                        ))
                                         .slice(0, 12)}
                          </div>
                     </div>
