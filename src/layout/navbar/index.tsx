@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { AiOutlineMenu } from "react-icons/ai";
 import { Link, NavLink } from "react-router-dom";
 
 export interface NavBarProps {
@@ -30,11 +31,14 @@ export const Navbar: FC<NavBarProps> = ({ NavLinks, logo, logoType }) => {
                               type="button"
                               onClick={() => setNavbarOpen(!navbarOpen)}
                          >
-                              <i className="fas fa-bars"></i>
+                              <AiOutlineMenu />
                          </button>
                     </div>
                     <div
-                         className={"lg:flex flex-grow items-center" + (navbarOpen ? " flex" : " hidden")}
+                         className={
+                              "lg:flex xl:flex-row flex-grow items-center lg:auto xl:w-auto lg:w-auto w-full  justify-center" +
+                              (navbarOpen ? " flex" : " hidden")
+                         }
                          id="example-navbar-danger"
                     >
                          <ul className="flex flex-col lg:flex-row list-none lg:ml-auto gap-3 items-center">
@@ -46,7 +50,7 @@ export const Navbar: FC<NavBarProps> = ({ NavLinks, logo, logoType }) => {
                                         <Link to={path}>{displayText}</Link>
                                    </li>
                               ))}
-                              <li>
+                              <li className="my-5">
                                    <Link
                                         to="/join-us"
                                         className="bg-primary-300 hover:bg-primary-500 hover:text-white duration-300 px-5 py-2 rounded-md text-gray-900 font-semibold uppercase text-sm"
