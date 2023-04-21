@@ -9,8 +9,8 @@ interface InitialCategoryProps {
      error?: string;
      success?: string;
      single?: CategoriesProps;
-     tours: CategoriesProps[];
-     lifeStyle: CategoriesProps[];
+     tours: any[];
+     lifeStyle: any[];
 }
 
 const InitialCategoryState: InitialCategoryProps = {
@@ -25,52 +25,35 @@ const InitialCategoryState: InitialCategoryProps = {
 const CategorySlice = createSlice({
      name: "category",
      initialState: InitialCategoryState,
-     reducers: {
-          FilterAccommodation: (state, action) => {
-               state.loading = true;
-               state.data.map((element: any) => {
-                    if (action.payload === element.parentCategory._id) {
-                         state.tours.push(element);
-                    }
-               });
-               state.loading = false;
-          },
-          FilterToursPackages: (state, action) => {
-               state.loading = true;
-               state.data.map((element: any) => {
-                    if (element.parentCategory._id === action.payload) {
-                         state.lifeStyle.push(element);
-                    }
-               });
-               state.loading = false;
-          },
-     },
-     extraReducers: {
-          [GetAllCategory.fulfilled.type]: (state, action) => {
+     reducers: {},
+     extraReducers: ({ addCase }) => {
+          addCase(GetAllCategory.fulfilled, (state, action) => {
                state.data = action.payload;
                state.loading = false;
-          },
-          [GetAllCategory.pending.type]: (state) => {
-               state.loading = true;
-          },
-          [GetAllCategory.rejected.type]: (state, action) => {
-               state.error = action.payload as string;
-          },
-          [GetCategoryById.fulfilled.type]: (state, action) => {
-               state.single = action.payload;
-               state.loading = true;
-          },
-          [GetCategoryById.pending.type]: (state) => {
-               state.loading = true;
-          },
-          [GetCategoryById.rejected.type]: (state, action) => {
-               state.error = action.payload;
-          },
+          })
+               .addCase(GetAllCategory.pending, (state) => {
+                    state.loading = true;
+               })
+               .addCase(GetAllCategory.rejected, (state, action) => {
+                    state.error = action.payload as string;
+                    state.loading = false;
+               })
+               .addCase(GetCategoryById.fulfilled, (state, action) => {
+                    state.single = action.payload;
+                    state.loading = true;
+               })
+               .addCase(GetCategoryById.pending, (state) => {
+                    state.loading = true;
+               })
+               .addCase(GetCategoryById.rejected, (state, action) => {
+                    state.error = action.payload as string;
+                    state.loading = false;
+               });
      },
 });
 
 export const CategoryReducer = CategorySlice.reducer;
-export const { FilterAccommodation, FilterToursPackages } = CategorySlice.actions;
+// export const { FilterAccommodation, FilterToursPackages } = CategorySlice.actions;
 export const useCategorySelector = () =>
      useSelector((state: any) => {
           return state.category;

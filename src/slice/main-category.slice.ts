@@ -20,27 +20,25 @@ const MainCategorySlice = createSlice({
      name: "mainCategory",
      initialState: InitialMainCategoryState,
      reducers: {},
-     extraReducers: {
-          [GetAllMainCategory.fulfilled.type]: (state, action) => {
+     extraReducers: ({ addCase }) => {
+          addCase(GetAllMainCategory.fulfilled, (state, action) => {
                state.data = action.payload;
-               state.loading = false;
-          },
-          [GetAllMainCategory.pending.type]: (state) => {
-               state.loading = true;
-          },
-          [GetAllMainCategory.rejected.type]: (state, action) => {
-               state.error = action.payload as string;
-          },
-          [GetMainCategoryById.fulfilled.type]: (state, action) => {
-               state.single = action.payload;
-               state.loading = true;
-          },
-          [GetMainCategoryById.pending.type]: (state) => {
-               state.loading = true;
-          },
-          [GetMainCategoryById.rejected.type]: (state, action) => {
-               state.error = action.payload as string;
-          },
+          })
+               .addCase(GetAllMainCategory.pending, (state) => {
+                    state.loading = true;
+               })
+               .addCase(GetAllMainCategory.rejected, (state, action) => {
+                    state.error = action.payload as string;
+               })
+               .addCase(GetMainCategoryById.fulfilled, (state, action) => {
+                    state.single = action.payload;
+               })
+               .addCase(GetMainCategoryById.pending, (state) => {
+                    state.loading = true;
+               })
+               .addCase(GetMainCategoryById.rejected, (state, action) => {
+                    state.error = action.payload as string;
+               });
      },
 });
 

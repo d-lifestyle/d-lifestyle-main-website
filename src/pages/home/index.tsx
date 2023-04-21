@@ -6,8 +6,6 @@ import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import { CarouselItem } from "../../component";
 import {
-     FilterAccommodation,
-     FilterToursPackages,
      useAccommodationSelector,
      useCarouselSelector,
      useCategorySelector,
@@ -83,32 +81,31 @@ const Months = [
 export const Home = () => {
      const carousel = useCarouselSelector();
      const categories = useCategorySelector();
-     const mainCategories = useMainCategorySelector();
      const accommodation = useAccommodationSelector();
+     const mainCategory = useMainCategorySelector();
      const toursTravels = useToursTravelSelector();
      const dispatch = useDispatch<AppDispatch>();
 
-     const getMainCategories = async () => {
-          await dispatch(GetAllMainCategory());
-     };
-
      useLayoutEffect(() => {
           (async () => {
-               await getMainCategories();
                await dispatch(GetAllCategory());
+               await dispatch(GetAllMainCategory());
                await dispatch(GetAllCarousel());
                await dispatch(GetAllAccommodation());
                await dispatch(GetAllToursTravel());
           })();
-          dispatch(FilterToursPackages(mainCategories?.data[0]?._id));
-          dispatch(FilterAccommodation(mainCategories?.data[1]?._id));
      }, []);
 
      return (
           <DefaultLayout pageTitle="Best travel agency in India">
                <div className="flex gap-5 justify-center bg-gray-100 py-8 flex-wrap">
-                    {categories?.tours?.length !== 0 &&
-                         categories.tours.map(({ name, _id }: CategoriesProps) => (
+                    {categories.data
+
+                         ?.filter((x: any) => {
+                              return x.parentCategory._id === mainCategory?.data[1]?._id;
+                         })
+
+                         .map(({ name, _id }: CategoriesProps) => (
                               <h6
                                    key={_id}
                                    className="cursor-pointer bg-white px-5 py-2 rounded-md uppercase hover:text-primary-500 text-sm border-2 duration-300 hover:border-primary-500"
@@ -247,8 +244,13 @@ export const Home = () => {
                <div className="mt-20 pt-10" id="services">
                     <h6 className="text-2xl uppercase text-gray-900 text-center">explore our life style services</h6>
                     <div className="flex gap-5 justify-center bg-gray-100 py-8 flex-wrap">
-                         {categories?.tours?.length !== 0 &&
-                              categories.lifeStyle.map(({ name, _id }: CategoriesProps) => (
+                         {categories.data
+
+                              ?.filter((x: any) => {
+                                   return x.parentCategory._id === mainCategory?.data[0]?._id;
+                              })
+
+                              .map(({ name, _id }: CategoriesProps) => (
                                    <h6
                                         key={_id}
                                         className="cursor-pointer bg-white px-5 py-2 rounded-md uppercase hover:text-primary-500 text-sm border-2 duration-300 hover:border-primary-500"
