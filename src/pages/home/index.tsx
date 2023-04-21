@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 
 import { DefaultLayout } from "../../layout";
 import OwlCarousel from "react-owl-carousel";
@@ -6,6 +6,8 @@ import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import { CarouselItem } from "../../component";
 import {
+     FilterAccommodation,
+     FilterToursPackages,
      useAccommodationSelector,
      useCarouselSelector,
      useCategorySelector,
@@ -85,22 +87,31 @@ export const Home = () => {
      const accommodation = useAccommodationSelector();
      const toursTravels = useToursTravelSelector();
      const dispatch = useDispatch<AppDispatch>();
-     console.log(mainCategories.data);
 
-     useEffect(() => {
+     const getMainCategories = async () => {
+          await dispatch(GetAllMainCategory());
+     };
+
+     useLayoutEffect(() => {
           (async () => {
+               await getMainCategories();
+               if (await mainCategories.data.length) {
+                    dispatch(FilterToursPackages(await mainCategories?.data[0]?._id));
+                    dispatch(FilterAccommodation(await mainCategories?.data[1]?._id));
+               }
                await dispatch(GetAllCategory());
                await dispatch(GetAllCarousel());
-               await dispatch(GetAllMainCategory());
                await dispatch(GetAllAccommodation());
                await dispatch(GetAllToursTravel());
+
+               console.log("data", await categories);
           })();
      }, [dispatch]);
      return (
           <DefaultLayout pageTitle="Best travel agency in India">
                <div className="flex gap-5 justify-center bg-gray-100 py-8 flex-wrap">
-                    {categories?.data?.length !== 0 &&
-                         categories.data?.map(({ name, _id }: CategoriesProps) => (
+                    {categories?.tours?.length !== 0 &&
+                         categories.tours.map(({ name, _id }: CategoriesProps) => (
                               <h6
                                    key={_id}
                                    className="cursor-pointer bg-white px-5 py-2 rounded-md uppercase hover:text-primary-500 text-sm border-2 duration-300 hover:border-primary-500"
@@ -246,16 +257,18 @@ export const Home = () => {
                          </div>
                     </div>
                </div>
-               <div className="mt-20 mb-20 pt-10" id="services">
-                    <h6 className="text-2xl uppercase text-gray-900 text-center">explore our services</h6>
-                    <div className="flex gap-5 mt-5 justify-center flex-wrap">
-                         <h6 className="cursor-pointer uppercase hover:text-primary-500">entertainment</h6>
-                         <h6 className="cursor-pointer uppercase hover:text-primary-500">resturent &amp; cafe</h6>
-                         <h6 className="cursor-pointer uppercase hover:text-primary-500">health &amp; wellness</h6>
-                         <h6 className="cursor-pointer uppercase hover:text-primary-500">shopping</h6>
-                         <h6 className="cursor-pointer uppercase hover:text-primary-500">events</h6>
-                         <h6 className="cursor-pointer uppercase hover:text-primary-500">personal services</h6>
-                         <h6 className="cursor-pointer uppercase hover:text-primary-500">membership</h6>
+               <div className="mt-20 pt-10" id="services">
+                    <h6 className="text-2xl uppercase text-gray-900 text-center">explore our life style services</h6>
+                    <div className="flex gap-5 justify-center bg-gray-100 py-8 flex-wrap">
+                         {categories?.tours?.length !== 0 &&
+                              categories.lifeStyle.map(({ name, _id }: CategoriesProps) => (
+                                   <h6
+                                        key={_id}
+                                        className="cursor-pointer bg-white px-5 py-2 rounded-md uppercase hover:text-primary-500 text-sm border-2 duration-300 hover:border-primary-500"
+                                   >
+                                        {name}
+                                   </h6>
+                              ))}
                     </div>
                     <OwlCarousel items={1} autoplay className="owl-theme mt-10" loop margin={10} nav>
                          {carousel.data.length &&

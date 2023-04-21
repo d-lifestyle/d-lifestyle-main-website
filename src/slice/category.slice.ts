@@ -1,25 +1,50 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { GetAllCategory, GetCategoryById } from "../features/action";
 import { useSelector } from "react-redux";
-import { CategoriesProps } from "../interface";
+import { AccommodationProps, CategoriesProps, MainCategoryProps, ToursTravelProps } from "../interface";
 
-interface InitialMenuProps {
+interface InitialCategoryProps {
      loading: boolean;
      data: CategoriesProps[];
      error?: string;
      success?: string;
      single?: CategoriesProps;
+     tours: CategoriesProps[];
+     lifeStyle: CategoriesProps[];
 }
 
-const InitialMenuState: InitialMenuProps = {
+const InitialCategoryState: InitialCategoryProps = {
      loading: false,
      data: [],
+     lifeStyle: [],
+     tours: [],
+     error: "",
+     success: "",
 };
 
 const CategorySlice = createSlice({
      name: "category",
-     initialState: InitialMenuState,
-     reducers: {},
+     initialState: InitialCategoryState,
+     reducers: {
+          FilterAccommodation: (state, action) => {
+               state.loading = true;
+               state.data.map((element: any) => {
+                    if (action.payload === element.parentCategory._id) {
+                         state.tours.push(element);
+                    }
+               });
+               state.loading = false;
+          },
+          FilterToursPackages: (state, action) => {
+               state.loading = true;
+               state.data.map((element: any) => {
+                    if (element.parentCategory._id === action.payload) {
+                         state.lifeStyle.push(element);
+                    }
+               });
+               state.loading = false;
+          },
+     },
      extraReducers: {
           [GetAllCategory.fulfilled.type]: (state, action) => {
                state.data = action.payload;
@@ -39,13 +64,13 @@ const CategorySlice = createSlice({
                state.loading = true;
           },
           [GetCategoryById.rejected.type]: (state, action) => {
-               state.error = action.payload as string;
+               state.error = action.payload;
           },
      },
 });
 
 export const CategoryReducer = CategorySlice.reducer;
-// export const {} = MenuSlice.actions
+export const { FilterAccommodation, FilterToursPackages } = CategorySlice.actions;
 export const useCategorySelector = () =>
      useSelector((state: any) => {
           return state.category;

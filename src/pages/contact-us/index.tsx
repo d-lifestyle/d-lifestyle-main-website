@@ -1,5 +1,6 @@
 import React from "react";
+import { DefaultLayout } from "../../layout";
 
 export const ContactUsPage = () => {
-     return <div>contact us page is working...</div>;
+     return <DefaultLayout pageTitle="Best travel agency in India">contact page is working....</DefaultLayout>;
 };

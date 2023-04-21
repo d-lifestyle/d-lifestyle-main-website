@@ -2,28 +2,33 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import mainCategoryService from "../../service/main-category.service";
 
-const GetAllMainCategory = createAsyncThunk("mainCategory/all", async () => {
+const GetAllMainCategory = createAsyncThunk("mainCategory/all", async (state, { rejectWithValue }) => {
      try {
           const data = await mainCategoryService.GetMainCategory();
           return await data.data.data;
      } catch (err: any) {
           if (err.response) {
-               return err.response.data.message;
+               console.log(err.response.data.message);
+               return rejectWithValue(err.response.data.message);
           } else {
-               return err.response;
+               console.log(err.message);
+               return rejectWithValue(err.response);
           }
      }
 });
 
-const GetMainCategoryById = createAsyncThunk("mainCategory/by-id", async (props: string) => {
+const GetMainCategoryById = createAsyncThunk("mainCategory/by-id", async (props: string, { rejectWithValue }) => {
      try {
           const data = await mainCategoryService.GetMainCategoryById(props);
           return await data.data.data;
      } catch (err: any) {
           if (err.response) {
-               return err.response.data.message;
+               console.log(err.response.data.message);
+
+               return rejectWithValue(err.response.data.message);
           } else {
-               return err.response;
+               console.log(err.message);
+               return rejectWithValue(err.response);
           }
      }
 });

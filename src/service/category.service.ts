@@ -22,6 +22,10 @@ class CategoryServices {
      public async DeleteCategoryById(id: string) {
           return await axios.delete(`${process.env.REACT_APP_BACKEND}/categories/${id}`);
      }
+     public async CategoryByParentCategoryId(id: string) {
+          return await axios.get(`${process.env.REACT_APP_BACKEND}/categories/main-categories/${id}`);
+
+     }
 }
 
 const CategoryService = new CategoryServices();

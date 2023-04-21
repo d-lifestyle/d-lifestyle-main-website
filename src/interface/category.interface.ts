@@ -1,6 +1,7 @@
 export interface CategoriesProps {
      _id?: string;
      createdAt?: string;
+     parentCategory: any;
      updatedAt?: string;
      name: string;
 }

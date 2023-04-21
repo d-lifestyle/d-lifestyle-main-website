@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { NewCategoryProps, UpdateCategoryProps } from "../../interface";
 import categoryService from "../../service/category.service";
 
-const GetAllCategory = createAsyncThunk("menu/all", async () => {
+const GetAllCategory = createAsyncThunk("category/all", async () => {
      try {
           const data = await categoryService.GetCategory();
           return await data.data.data;
@@ -16,7 +16,7 @@ const GetAllCategory = createAsyncThunk("menu/all", async () => {
      }
 });
 
-const GetCategoryById = createAsyncThunk("menu/by-id", async (props: string) => {
+const GetCategoryById = createAsyncThunk("category/by-id", async (props: string) => {
      try {
           const data = await categoryService.GetCategoryById(props);
           return await data.data.data;
@@ -29,7 +29,7 @@ const GetCategoryById = createAsyncThunk("menu/by-id", async (props: string) => 
      }
 });
 
-const AddNewCategory = createAsyncThunk("menu/new", async (props: NewCategoryProps) => {
+const AddNewCategory = createAsyncThunk("category/new", async (props: NewCategoryProps) => {
      try {
           const data = await categoryService.AddCategory({
                name: props.name,
@@ -44,7 +44,7 @@ const AddNewCategory = createAsyncThunk("menu/new", async (props: NewCategoryPro
      }
 });
 
-const UpdateCategoryById = createAsyncThunk("menu/update", async (props: UpdateCategoryProps) => {
+const UpdateCategoryById = createAsyncThunk("category/update", async (props: UpdateCategoryProps) => {
      try {
           const data = await categoryService.UpdateCategoryById(props);
           return await data.data.data;
@@ -57,7 +57,7 @@ const UpdateCategoryById = createAsyncThunk("menu/update", async (props: UpdateC
      }
 });
 
-const DeleteCategoryById = createAsyncThunk("menu/delete", async (props: string) => {
+const DeleteCategoryById = createAsyncThunk("category/delete", async (props: string) => {
      try {
           const data = await categoryService.DeleteCategoryById(props);
           return await data.data.data;
@@ -69,5 +69,7 @@ const DeleteCategoryById = createAsyncThunk("menu/delete", async (props: string)
           }
      }
 });
+
+
 
 export { GetCategoryById, GetAllCategory, AddNewCategory, UpdateCategoryById, DeleteCategoryById };
