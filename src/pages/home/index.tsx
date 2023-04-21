@@ -100,11 +100,9 @@ export const Home = () => {
                await dispatch(GetAllAccommodation());
                await dispatch(GetAllToursTravel());
           })();
-          if (mainCategories.data.length) {
-               dispatch(FilterToursPackages(mainCategories?.data[0]?._id));
-               dispatch(FilterAccommodation(mainCategories?.data[1]?._id));
-          }
-     }, [dispatch]);
+          dispatch(FilterToursPackages(mainCategories?.data[0]?._id));
+          dispatch(FilterAccommodation(mainCategories?.data[1]?._id));
+     }, []);
 
      return (
           <DefaultLayout pageTitle="Best travel agency in India">
