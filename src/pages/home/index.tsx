@@ -95,18 +95,17 @@ export const Home = () => {
      useLayoutEffect(() => {
           (async () => {
                await getMainCategories();
-               if (await mainCategories.data.length) {
-                    dispatch(FilterToursPackages(await mainCategories?.data[0]?._id));
-                    dispatch(FilterAccommodation(await mainCategories?.data[1]?._id));
-               }
                await dispatch(GetAllCategory());
                await dispatch(GetAllCarousel());
                await dispatch(GetAllAccommodation());
                await dispatch(GetAllToursTravel());
-
-               console.log("data", await categories);
           })();
+          if (mainCategories.data.length) {
+               dispatch(FilterToursPackages(mainCategories?.data[0]?._id));
+               dispatch(FilterAccommodation(mainCategories?.data[1]?._id));
+          }
      }, [dispatch]);
+
      return (
           <DefaultLayout pageTitle="Best travel agency in India">
                <div className="flex gap-5 justify-center bg-gray-100 py-8 flex-wrap">
