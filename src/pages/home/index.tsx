@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React from "react";
 
 import { DefaultLayout } from "../../layout";
 import OwlCarousel from "react-owl-carousel";
@@ -12,15 +12,6 @@ import {
      useMainCategorySelector,
      useToursTravelSelector,
 } from "../../slice";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../features";
-import {
-     GetAllAccommodation,
-     GetAllCarousel,
-     GetAllCategory,
-     GetAllMainCategory,
-     GetAllToursTravel,
-} from "../../features/action";
 import { AccommodationProps, CarouselProps, CategoriesProps, ToursTravelProps } from "../../interface";
 import { MdShareLocation } from "react-icons/md";
 import { AiOutlineArrowRight } from "react-icons/ai";
@@ -84,38 +75,28 @@ export const Home = () => {
      const accommodation = useAccommodationSelector();
      const mainCategory = useMainCategorySelector();
      const toursTravels = useToursTravelSelector();
-     const dispatch = useDispatch<AppDispatch>();
-
-     useLayoutEffect(() => {
-          (async () => {
-               await dispatch(GetAllCategory());
-               await dispatch(GetAllMainCategory());
-               await dispatch(GetAllCarousel());
-               await dispatch(GetAllAccommodation());
-               await dispatch(GetAllToursTravel());
-          })();
-     }, []);
 
      return (
           <DefaultLayout pageTitle="Best travel agency in India">
-               <div className="flex gap-5 justify-center bg-gray-100 py-8 flex-wrap">
-                    {categories.data
+               {categories.data.length && (
+                    <div className="flex gap-5 justify-center bg-gray-100 py-8 flex-wrap">
+                         {categories.data
 
-                         ?.filter((x: any) => {
-                              return x.parentCategory._id === mainCategory?.data[1]?._id;
-                         })
-
-                         .map(({ name, _id }: CategoriesProps) => (
-                              <h6
-                                   key={_id}
-                                   className="cursor-pointer bg-white px-5 py-2 rounded-md uppercase hover:text-primary-500 text-sm border-2 duration-300 hover:border-primary-500"
-                              >
-                                   {name}
-                              </h6>
-                         ))}
-               </div>
+                              ?.filter((x: any) => {
+                                   return x.parentCategory._id === mainCategory?.data[1]?._id;
+                              })
+                              .map(({ name, _id }: CategoriesProps) => (
+                                   <h6
+                                        key={_id}
+                                        className="cursor-pointer bg-white px-5 py-2 rounded-md uppercase hover:text-primary-500 text-sm border-2 duration-300 hover:border-primary-500"
+                                   >
+                                        {name}
+                                   </h6>
+                              ))}
+                    </div>
+               )}
                <OwlCarousel items={1} autoplay className="owl-theme" loop margin={10} nav>
-                    {carousel.data.length &&
+                    {carousel.data.length !== 0 &&
                          carousel.data?.map(({ dataAlt, dataImage }: CarouselProps, i: number) => (
                               <CarouselItem key={i} image={dataImage} altText={dataAlt} />
                          ))}
@@ -221,7 +202,7 @@ export const Home = () => {
                     </div>
                </div>
 
-               <div className="bg-secondary-600 my-20 px-20 py-10">
+               <div className="bg-secondary-600 mt-20 px-20 py-10">
                     <div className="">
                          <h5 className="text-xl uppercase text-center text-white">
                               BEST PLACES TO VISIT IN INDIA BY MONTH
@@ -241,9 +222,29 @@ export const Home = () => {
                          </div>
                     </div>
                </div>
-               <div className="mt-20 pt-10" id="services">
+               <div className="bg-secondary-600 border-t-2 px-20 py-10">
+                    <div className="">
+                         <h5 className="text-xl uppercase text-center text-white">
+                              BEST PLACES TO VISIT outside INDIA BY MONTH
+                         </h5>
+                         <div className="grid grid-cols-12 mt-10 gap-5">
+                              {Months.map(({ image, name }, i) => (
+                                   <div
+                                        className="col-span-6 xl:col-span-1 md:col-span-4 lg:col-span-1 flex flex-col group hover:shadow-md p-5 rounded-sm duration-300 hover:bg-primary-500 justify-center items-center cursor-pointer"
+                                        key={i}
+                                   >
+                                        <img src={image} className="rounded-full" alt={name} />
+                                        <div className="text-sm mt-2 text-gray-300 group-hover:text-white uppercase">
+                                             {name}
+                                        </div>
+                                   </div>
+                              ))}
+                         </div>
+                    </div>
+               </div>
+               <div className="bg-gray-100 py-10" id="services">
                     <h6 className="text-2xl uppercase text-gray-900 text-center">explore our life style services</h6>
-                    <div className="flex gap-5 justify-center bg-gray-100 py-8 flex-wrap">
+                    <div className="flex gap-5 justify-center flex-wrap mt-10">
                          {categories.data
 
                               ?.filter((x: any) => {
@@ -259,13 +260,13 @@ export const Home = () => {
                                    </h6>
                               ))}
                     </div>
-                    <OwlCarousel items={1} autoplay className="owl-theme mt-10" loop margin={10} nav>
-                         {carousel.data.length &&
-                              carousel.data.map(({ dataAlt, dataImage }: CarouselProps, i: number) => (
-                                   <CarouselItem key={i} image={dataImage} altText={dataAlt} />
-                              ))}
-                    </OwlCarousel>
                </div>
+               <OwlCarousel items={1} autoplay className="owl-theme" loop margin={10} nav>
+                    {carousel.data.length &&
+                         carousel.data.map(({ dataAlt, dataImage }: CarouselProps, i: number) => (
+                              <CarouselItem key={i} image={dataImage} altText={dataAlt} />
+                         ))}
+               </OwlCarousel>
           </DefaultLayout>
      );
 };

@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export interface NavBarProps {
      logo: string;

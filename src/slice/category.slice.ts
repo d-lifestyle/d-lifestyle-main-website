@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { GetAllCategory, GetCategoryById } from "../features/action";
 import { useSelector } from "react-redux";
-import { AccommodationProps, CategoriesProps, MainCategoryProps, ToursTravelProps } from "../interface";
+import { CategoriesProps } from "../interface";
 
 interface InitialCategoryProps {
      loading: boolean;
