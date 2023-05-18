@@ -1,14 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { useSelector } from "react-redux";
-import { GetAllToursTravel } from "../../features/action";
+import { GetAllToursTravel, GetToursTravelById } from "../../features/action";
 import { ToursTravelProps } from "../../interface";
+import { RootState } from "../../features";
 
 interface InitialToursTravelProps {
      loading: boolean;
      data: ToursTravelProps[];
      error: string;
      success: string;
+     single?: ToursTravelProps;
 }
 
 const InitialToursTravelState: InitialToursTravelProps = {
@@ -40,6 +42,6 @@ const CarouselSlice = createSlice({
 export const ToursTravelReducer = CarouselSlice.reducer;
 // export const {} = CarouselSlice.actions
 export const useToursTravelSelector = () =>
-     useSelector((state: any) => {
+     useSelector((state: RootState) => {
           return state.toursTravel;
      });

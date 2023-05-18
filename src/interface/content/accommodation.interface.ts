@@ -3,6 +3,11 @@ import { SubCategoryProps } from "../sub-category.interface";
 export interface AccommodationProps {
      displayName: string;
      city: string;
+     description: string;
+     image: {
+          image: string;
+          title: string;
+     }[];
      state: string;
      SubCategory: any;
      _id?: string;

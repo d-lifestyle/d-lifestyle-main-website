@@ -3,14 +3,7 @@ import { DefaultLayout } from "../../layout";
 import { Formik } from "formik";
 import { ContactInitialValidation, ContactValidationSchema } from "../../validation";
 import { ContactFormProps } from "../../interface";
-import {
-     AiFillFacebook,
-     AiFillInstagram,
-     AiOutlineFacebook,
-     AiOutlineInstagram,
-     AiOutlineLinkedin,
-     AiOutlineMessage,
-} from "react-icons/ai";
+import { AiOutlineFacebook, AiOutlineInstagram, AiOutlineLinkedin, AiOutlineMessage } from "react-icons/ai";
 
 export const ContactUsPage = () => {
      const handleContactSubmit = (e: ContactFormProps) => {

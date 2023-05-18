@@ -6,9 +6,17 @@ const GetAllAccommodation = createAsyncThunk("accommodation/all", async () => {
      return data.data.data;
 });
 
-const GetAccommodationById = createAsyncThunk("accommodation/by-id", async (props: string) => {
-     const data = await accommodationService.GetAccommodationById(props);
-     return data.data.data;
+const GetAccommodationById = createAsyncThunk("accommodation/by-id", async (props: string, { rejectWithValue }) => {
+     try {
+          const data = await accommodationService.GetAccommodationById(props);
+          return await data.data.data;
+     } catch (err: any) {
+          if (err.response) {
+               rejectWithValue(err.response.data.message);
+          } else {
+               rejectWithValue(err.message);
+          }
+     }
 });
 
 export { GetAccommodationById, GetAllAccommodation };

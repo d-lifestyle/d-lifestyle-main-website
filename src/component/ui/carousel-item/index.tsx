@@ -7,8 +7,8 @@ export interface CarouselItemProps {
 
 export const CarouselItem: FC<CarouselItemProps> = ({ altText, image }) => {
      return (
-          <div className="item xl:h-[80vh] lg:h-[80-vh]">
-               <img src={image} alt={altText} className="xl:object-fill" />
+          <div className="item xl:h-[60vh] lg:h-[60-vh]">
+               <img src={image} width="100%" height="100%" alt={altText} className="object-cover" />
           </div>
      );
 };

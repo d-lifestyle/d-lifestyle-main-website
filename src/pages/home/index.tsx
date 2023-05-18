@@ -15,6 +15,7 @@ import {
 import { AccommodationProps, CarouselProps, CategoriesProps, ToursTravelProps } from "../../interface";
 import { MdShareLocation } from "react-icons/md";
 import { AiOutlineArrowRight } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 const Months = [
      {
@@ -75,10 +76,11 @@ export const Home = () => {
      const accommodation = useAccommodationSelector();
      const mainCategory = useMainCategorySelector();
      const toursTravels = useToursTravelSelector();
+     const navigate = useNavigate();
 
      return (
           <DefaultLayout pageTitle="Best travel agency in India">
-               {categories.data.length && (
+               {categories.data.length !== 0 && (
                     <div className="flex gap-5 justify-center bg-gray-100 py-8 flex-wrap">
                          {categories.data
 
@@ -114,40 +116,54 @@ export const Home = () => {
                                    <AiOutlineArrowRight />
                               </button>
                          </div>
-                         <div className="grid grid-cols-12 gap-8 mt-5 justify-center">
+                         <div className="grid grid-cols-12 gap-8 mt-5 ">
                               {accommodation.data.length !== 0 &&
                                    accommodation.data
-                                        ?.map(({ SubCategory, city, displayName, state, _id }: AccommodationProps) => (
-                                             <div
-                                                  key={_id}
-                                                  className="col-span-12 xl:col-span-3 lg:col-span-3 md:col-span-6 sm:col-span-12"
-                                             >
-                                                  <div className="bg-white rounded-md group  border-2 hover:border-opacity-50 hover:border-primary-500 hover:shadow-xl duration-300 cursor-pointer">
-                                                       <img
-                                                            src="https://images.pexels.com/photos/14613200/pexels-photo-14613200.jpeg"
-                                                            alt={displayName}
-                                                       />
-                                                       <div className="px-3 py-2">
-                                                            <h6 className="text-xl capitalize group-hover:text-primary-500 truncate">
-                                                                 {displayName}
-                                                            </h6>
-                                                            <button
-                                                                 type="button"
-                                                                 className="flex gap-3 items-center my-3"
-                                                            >
-                                                                 <MdShareLocation />
+                                        ?.map(
+                                             ({
+                                                  SubCategory,
+                                                  city,
+                                                  displayName,
+                                                  state,
+                                                  _id,
+                                                  image,
+                                             }: AccommodationProps) => (
+                                                  <div
+                                                       key={_id}
+                                                       className="col-span-12 xl:col-span-3 lg:col-span-3 md:col-span-6 sm:col-span-12 h-full"
+                                                  >
+                                                       <div className="bg-white rounded-md group  border-2 hover:border-opacity-50 hover:border-primary-500 hover:shadow-xl duration-300">
+                                                            <figure className="max-w-lg">
+                                                                 <img
+                                                                      className="h-auto max-w-full"
+                                                                      src={image[0].image}
+                                                                      alt={image[0].title}
+                                                                 />
+                                                            </figure>
 
-                                                                 <p className="text-gray-500 uppercase font-semibold">
-                                                                      {SubCategory.name} - {SubCategory.CategoryId.name}
-                                                                 </p>
-                                                            </button>
-                                                            <p className="text-gray-500 capitalize">
-                                                                 {state}, {city}
-                                                            </p>
+                                                            <div className="px-3 py-2">
+                                                                 <h6 className="text-lg capitalize group-hover:text-primary-500 truncate">
+                                                                      {displayName}
+                                                                 </h6>
+                                                                 <div className="flex gap-3 items-center my-3">
+                                                                      <MdShareLocation size={23} />
+                                                                      <p className="text-gray-500 text-sm uppercase font-semibold">
+                                                                           {state}, {city}
+                                                                      </p>
+                                                                 </div>
+                                                                 <button
+                                                                      onClick={() => navigate(`/accommodation/${_id}`)}
+                                                                      className="rounded-md py-2 w-full bg-primary-100"
+                                                                 >
+                                                                      <span className="text-sm text-primary-500 uppercase">
+                                                                           view details
+                                                                      </span>
+                                                                 </button>
+                                                            </div>
                                                        </div>
                                                   </div>
-                                             </div>
-                                        ))
+                                             )
+                                        )
                                         .slice(0, 12)}
                          </div>
                     </div>
@@ -166,37 +182,49 @@ export const Home = () => {
                          <div className="grid grid-cols-12 gap-5 mt-5">
                               {toursTravels.data.length !== 0 &&
                                    toursTravels?.data
-                                        .map(({ SubCategory, displayName, place, duration, _id }: ToursTravelProps) => (
-                                             <div
-                                                  key={_id}
-                                                  className="col-span-12 xl:col-span-3 lg:col-span-3 md:col-span-6 sm:col-span-12"
-                                             >
-                                                  <div className="bg-white rounded-md group border-transparent border-2 hover:border-opacity-50 hover:border-secondary-500 hover:shadow-xl duration-300 cursor-pointer">
-                                                       <img
-                                                            src="https://images.pexels.com/photos/14613200/pexels-photo-14613200.jpeg"
-                                                            alt={displayName}
-                                                       />
-                                                       <div className="px-3 py-2">
-                                                            <h6 className="text-xl capitalize group-hover:text-secondary-500 truncate">
-                                                                 {displayName}
-                                                            </h6>
-                                                            <p className="font-semibold">For : {duration}</p>
-                                                            <button
-                                                                 type="button"
-                                                                 className="flex gap-3 items-center my-3"
-                                                            >
-                                                                 <MdShareLocation />
+                                        ?.map(
+                                             ({
+                                                  SubCategory,
+                                                  displayName,
+                                                  place,
+                                                  duration,
+                                                  _id,
+                                                  image,
+                                             }: ToursTravelProps) => (
+                                                  <div
+                                                       key={_id}
+                                                       className="col-span-12 xl:col-span-3 lg:col-span-3 md:col-span-6 sm:col-span-12"
+                                                  >
+                                                       <div className="bg-white rounded-md group border-transparent border-2 hover:border-opacity-50 hover:border-secondary-500 hover:shadow-xl duration-300 cursor-pointer">
+                                                            {image.length !== 0 && (
+                                                                 <img
+                                                                      src={image[0].image}
+                                                                      alt={image[0].title}
+                                                                      width="100%"
+                                                                 />
+                                                            )}
+                                                            <div className="px-3 py-2">
+                                                                 <h6 className="text-xl capitalize group-hover:text-secondary-500 truncate">
+                                                                      {displayName}
+                                                                 </h6>
+                                                                 <p className="font-semibold">For : {duration}</p>
+                                                                 <button
+                                                                      type="button"
+                                                                      className="flex gap-3 items-center my-3"
+                                                                 >
+                                                                      <MdShareLocation />
 
-                                                                 <p className="text-gray-500 uppercase font-semibold">
-                                                                      {SubCategory.name},{" "}
-                                                                      {SubCategory?.CategoryId?.name}
-                                                                 </p>
-                                                            </button>
-                                                            <p className="text-gray-500 capitalize">{place}</p>
+                                                                      <p className="text-gray-500 uppercase font-semibold">
+                                                                           {SubCategory.name},{" "}
+                                                                           {SubCategory?.CategoryId?.name}
+                                                                      </p>
+                                                                 </button>
+                                                                 <p className="text-gray-500 capitalize">{place}</p>
+                                                            </div>
                                                        </div>
                                                   </div>
-                                             </div>
-                                        ))
+                                             )
+                                        )
                                         .slice(0, 12)}
                          </div>
                     </div>
