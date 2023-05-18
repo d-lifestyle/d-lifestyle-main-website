@@ -25,7 +25,10 @@ export const AccommodationDetails = () => {
 
      return (
           <DefaultLayout pageTitle="Best travel agency in India">
-               accommodation details {accommodation.single?.displayName}
+               accommodation details{" "}
+               {accommodation.single?.image.map(({ image, title }) => (
+                    <img src={image} alt={title} />
+               ))}
           </DefaultLayout>
      );
 };
