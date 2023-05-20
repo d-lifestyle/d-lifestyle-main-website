@@ -4,3 +4,4 @@ export * from "./sub-category";
 
 export * from "./content";
 export * from "./main-category.slice";
+export * from "./general.slice";

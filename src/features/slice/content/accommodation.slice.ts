@@ -1,39 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { useSelector } from "react-redux";
-import { GetAccommodationById, GetAllAccommodation } from "../../features/action";
-import { AccommodationProps } from "../../interface";
-import { RootState } from "../../features";
+import { AccommodationProps } from "../../../interface";
+import { RootState } from "../../../store/hooks";
+import { GetAccommodationById, GetAllAccommodation } from "../../action";
 
 interface InitialAccommodationProps {
      loading: boolean;
      data: AccommodationProps[];
-     error: string;
-     // success?: string;
-     single: any;
+     error?: string;
+     success?: string;
+     single: AccommodationProps | undefined;
 }
 
-// const InitialAccommodationState: InitialAccommodationProps = {
-
-// };
+const InitialAccommodationState: InitialAccommodationProps = {
+     data: [],
+     loading: false,
+     single: undefined
+};
 
 const CarouselSlice = createSlice({
      name: "accommodation",
-     initialState: {
-          loading: false,
-          data: [],
-          single: {
-               _id: "0",
-               city: "",
-               description: "",
-               displayName: "",
-               image: [{ image: "", title: "" }],
-               state: "",
-               SubCategory: "",
-          },
-          error: "",
-          success: "",
-     },
+     initialState: InitialAccommodationState,
      reducers: {},
      extraReducers(builder) {
           builder

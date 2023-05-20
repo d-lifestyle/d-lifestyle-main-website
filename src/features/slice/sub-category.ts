@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { GetAllSubCategory, GetSubCategoryWithId, SubCategoryWithCategoryId } from "../features/action";
 import { useSelector } from "react-redux";
-import { SubCategoryProps } from "../interface/sub-category.interface";
+import { SubCategoryProps } from "../../interface/sub-category.interface";
+import { RootState } from "../../store/hooks";
+import { GetAllSubCategory, GetSubCategoryWithId, SubCategoryWithCategoryId } from "../action";
 
 interface InitialSubCategoryProps {
      loading: boolean;
@@ -60,6 +61,6 @@ const SubCategorySlice = createSlice({
 export const SubCategoryReducer = SubCategorySlice.reducer;
 // export const { } = SubCategorySlice.actions
 export const useSubCategorySelector = () =>
-     useSelector((state: any) => {
+     useSelector((state: RootState) => {
           return state.subcategory;
      });

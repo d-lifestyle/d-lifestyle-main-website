@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { GetAllCategory, GetCategoryById } from "../features/action";
 import { useSelector } from "react-redux";
-import { CategoriesProps } from "../interface";
+import { RootState } from "..";
+import { CategoriesProps } from "../../interface";
+import { GetAllCategory, GetCategoryById } from "../action";
 
 interface InitialCategoryProps {
      loading: boolean;
@@ -55,6 +56,6 @@ const CategorySlice = createSlice({
 export const CategoryReducer = CategorySlice.reducer;
 // export const { FilterAccommodation, FilterToursPackages } = CategorySlice.actions;
 export const useCategorySelector = () =>
-     useSelector((state: any) => {
+     useSelector((state: RootState) => {
           return state.category;
      });

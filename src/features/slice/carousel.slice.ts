@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { GetAllCarousel } from "../features/action";
 import { useSelector } from "react-redux";
-import { CarouselProps } from "../interface";
+import { RootState } from "..";
+import { CarouselProps } from "../../interface";
+import { GetAllCarousel } from "../action";
 
 interface InitialMenuProps {
      loading: boolean;
@@ -40,6 +41,6 @@ const CarouselSlice = createSlice({
 export const CarouselReducer = CarouselSlice.reducer;
 // export const {} = CarouselSlice.actions
 export const useCarouselSelector = () =>
-     useSelector((state: any) => {
+     useSelector((state: RootState) => {
           return state.carousel;
      });

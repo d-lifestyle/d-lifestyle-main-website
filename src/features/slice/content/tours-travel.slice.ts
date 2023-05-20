@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { useSelector } from "react-redux";
-import { GetAllToursTravel, GetToursTravelById } from "../../features/action";
-import { ToursTravelProps } from "../../interface";
-import { RootState } from "../../features";
+import { RootState } from "../..";
+import { ToursTravelProps } from "../../../interface";
+import { GetAllToursTravel } from "../../action";
+
 
 interface InitialToursTravelProps {
      loading: boolean;

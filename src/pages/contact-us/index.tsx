@@ -4,10 +4,25 @@ import { Formik } from "formik";
 import { ContactInitialValidation, ContactValidationSchema } from "../../validation";
 import { ContactFormProps } from "../../interface";
 import { AiOutlineFacebook, AiOutlineInstagram, AiOutlineLinkedin, AiOutlineMessage } from "react-icons/ai";
+import { AppDispatch } from "../../features";
+import { useDispatch } from "react-redux";
+import { ContactMeAction } from "../../features/action";
+import { enqueueSnackbar } from "notistack";
+import { useNavigate } from "react-router-dom";
 
 export const ContactUsPage = () => {
-     const handleContactSubmit = (e: ContactFormProps) => {
-          return console.log(e);
+     const dispatch = useDispatch<AppDispatch>();
+     const navigate = useNavigate();
+     const handleContactSubmit = async (e: ContactFormProps) => {
+          const data = await dispatch(ContactMeAction(e));
+          console.log(data);
+          if (data.type === "contact/new/fulfilled") {
+               navigate("/", { replace: true });
+               return enqueueSnackbar(data.payload, { variant: "success" });
+          }
+          if (data.type === "contact/new/rejected") {
+               return enqueueSnackbar(data.payload, { variant: "error" });
+          }
      };
      return (
           <DefaultLayout pageTitle="Best travel agency in India">
@@ -40,57 +55,106 @@ export const ContactUsPage = () => {
                                    validationSchema={ContactValidationSchema}
                                    onSubmit={handleContactSubmit}
                               >
-                                   {({ handleBlur, handleChange, handleSubmit }) => (
+                                   {({
+                                        handleBlur,
+                                        handleChange,
+                                        handleSubmit,
+                                        values,
+                                        touched,
+                                        errors,
+                                        isSubmitting,
+                                   }) => (
                                         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
                                              <div className="flex items-center gap-3">
                                                   <div className="flex-1">
                                                        <input
+                                                            onChange={handleChange("name")}
+                                                            onBlur={handleBlur("name")}
+                                                            value={values.name}
                                                             type="text"
                                                             className="w-full py-2 px-5 focus:border-primary-500 rounded-md border-2 focus:outline-none"
                                                             placeholder="Enter your name"
                                                        />
+                                                       {touched.name && (
+                                                            <p className="text-red-500 text-xs mt-1 text-right uppercase">
+                                                                 {errors.name}
+                                                            </p>
+                                                       )}
                                                   </div>
                                              </div>
                                              <div className="flex items-center gap-3">
                                                   <div className="flex-1">
                                                        <input
+                                                            onChange={handleChange("email")}
+                                                            onBlur={handleBlur("email")}
+                                                            value={values.email}
                                                             type="email"
                                                             className="w-full py-2 px-5 focus:border-primary-500 rounded-md border-2 focus:outline-none"
                                                             placeholder="Enter email address"
                                                        />
+                                                       {touched.email && (
+                                                            <p className="text-red-500 text-xs mt-1 text-right uppercase">
+                                                                 {errors.email}
+                                                            </p>
+                                                       )}
                                                   </div>
                                                   <div className="flex-1">
                                                        <input
+                                                            onChange={handleChange("phone")}
+                                                            onBlur={handleBlur("phone")}
+                                                            value={values.phone}
                                                             type="number"
                                                             className="w-full py-2 px-5 focus:border-primary-500 rounded-md border-2 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                                             placeholder="Enter mobile number"
                                                        />
+                                                       {touched.phone && (
+                                                            <p className="text-red-500 text-xs mt-1 text-right uppercase">
+                                                                 {errors.phone}
+                                                            </p>
+                                                       )}
                                                   </div>
                                              </div>
                                              <div className="flex items-center gap-3">
                                                   <div className="flex-1">
                                                        <input
+                                                            onChange={handleChange("placeToVisit")}
+                                                            onBlur={handleBlur("placeToVisit")}
+                                                            value={values.placeToVisit}
                                                             type="text"
                                                             className="w-full py-2 px-5 focus:border-primary-500 rounded-md border-2 focus:outline-none"
                                                             placeholder="Place you need to visit"
                                                        />
+                                                       {touched.placeToVisit && (
+                                                            <p className="text-red-500 text-xs mt-1 text-right uppercase">
+                                                                 {errors.placeToVisit}
+                                                            </p>
+                                                       )}
                                                   </div>
                                              </div>
                                              <div className="flex items-center gap-3">
                                                   <div className="flex-1">
                                                        <textarea
+                                                            onChange={handleChange("body")}
+                                                            onBlur={handleBlur("body")}
+                                                            value={values.body}
                                                             name=""
                                                             id=""
                                                             placeholder="Write us something..."
                                                             className="w-full py-2 px-5 focus:border-primary-500 rounded-md border-2 focus:outline-none resize-none"
                                                             rows={3}
-                                                       ></textarea>
+                                                       />
+                                                       {touched.body && (
+                                                            <p className="text-red-500 text-xs mt-1 text-right uppercase">
+                                                                 {errors.body}
+                                                            </p>
+                                                       )}
                                                   </div>
                                              </div>
                                              <div>
                                                   <button
                                                        className="flex items-center gap-3 bg-secondary-500 px-10 py-3 rounded-md text-white capitalize text-md"
                                                        type="submit"
+                                                       disabled={isSubmitting}
                                                   >
                                                        <AiOutlineMessage size={23} />
                                                        Send message

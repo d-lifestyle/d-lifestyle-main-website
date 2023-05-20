@@ -3,9 +3,11 @@ import {
      AccommodationReducer,
      CarouselReducer,
      CategoryReducer,
+     GeneralReducer,
+     MainCategoryReducer,
      SubCategoryReducer,
      ToursTravelReducer,
-} from "../slice";
+} from "./slice";
 
 const rootReducer = combineReducers({
      // content
@@ -15,6 +17,8 @@ const rootReducer = combineReducers({
      // inventories
      accommodation: AccommodationReducer,
      toursTravel: ToursTravelReducer,
+     mainCategory: MainCategoryReducer,
+     general: GeneralReducer,
 });
 
 const Store = configureStore({

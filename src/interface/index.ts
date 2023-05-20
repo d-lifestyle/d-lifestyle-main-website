@@ -8,4 +8,4 @@ export * from "./carousel.interface";
 
 export * from "./content";
 export * from "./main-category.interface";
-export * from "./contact.interface";
+export * from "./general.interface";

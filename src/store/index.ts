@@ -1,12 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import {
-     AccommodationReducer,
-     CarouselReducer,
-     CategoryReducer,
-     MainCategoryReducer,
-     SubCategoryReducer,
-     ToursTravelReducer,
-} from "../slice";
+import { CarouselReducer, CategoryReducer, SubCategoryReducer, MainCategoryReducer, AccommodationReducer, ToursTravelReducer } from "../features/slice";
+
 
 export const RootReducer = combineReducers({
      category: CategoryReducer,

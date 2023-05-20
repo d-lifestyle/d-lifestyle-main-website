@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { GetAllMainCategory, GetMainCategoryById } from "../features/action";
 import { useSelector } from "react-redux";
-import { MainCategoryProps } from "../interface";
+import { RootState } from "..";
+import { MainCategoryProps } from "../../interface";
+import { GetAllMainCategory, GetMainCategoryById } from "../action";
 
 interface InitialMainCategoryProps {
      loading: boolean;
@@ -45,6 +46,6 @@ const MainCategorySlice = createSlice({
 export const MainCategoryReducer = MainCategorySlice.reducer;
 // export const {} = MenuSlice.actions
 export const useMainCategorySelector = () =>
-     useSelector((state: any) => {
+     useSelector((state: RootState) => {
           return state.mainCategory;
      });
