@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { useGeneralSelector } from "../../features/slice";
 
 export interface NavBarProps {
      logo: string;
@@ -24,7 +25,7 @@ export const Navbar: FC<NavBarProps> = ({ NavLinks, logo, logoType }) => {
                               to="/"
                          >
                               {logoType === "string" && <>{logo}</>}
-                              {logoType === "logo" && <img src={logo} alt="" />}
+                              {logoType === "logo" && <img width={75} src={logo} alt="" />}
                          </Link>
                          <button
                               className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"

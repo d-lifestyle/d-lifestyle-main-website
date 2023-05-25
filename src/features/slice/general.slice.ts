@@ -1,15 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 import { RootState } from "..";
-import { ContactMeAction, SendEnquiryAction } from "../action";
+import { ContactMeAction, SendEnquiryAction, WebContentAction } from "../action";
+import { UserProps } from "../../interface";
 
+interface InitialGeneralProps {
+     success: string;
+     error: string;
+     loading: boolean;
+     content: UserProps;
+}
+
+const InitialStateGeneral: InitialGeneralProps = {
+     content: {} as UserProps,
+     error: "",
+     loading: false,
+     success: "",
+};
 const GeneralSlice = createSlice({
      name: "general",
-     initialState: {
-          success: "",
-          error: "",
-          loading: false,
-     },
+     initialState: InitialStateGeneral,
      reducers: {},
      extraReducers(builder) {
           builder
@@ -30,6 +40,17 @@ const GeneralSlice = createSlice({
                     state.loading = true;
                })
                .addCase(SendEnquiryAction.rejected, (state, action) => {
+                    state.error = action.payload as string;
+               });
+          builder
+               .addCase(WebContentAction.fulfilled, (state, action) => {
+                    state.success = "got the data";
+                    state.content = action.payload;
+               })
+               .addCase(WebContentAction.pending, (state, action) => {
+                    state.loading = true;
+               })
+               .addCase(WebContentAction.rejected, (state, action) => {
                     state.error = action.payload as string;
                });
      },

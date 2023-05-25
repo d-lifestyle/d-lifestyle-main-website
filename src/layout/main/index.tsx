@@ -8,9 +8,11 @@ import {
      GetAllCategory,
      GetAllMainCategory,
      GetAllToursTravel,
+     WebContentAction,
 } from "../../features/action";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../features";
+import { useGeneralSelector } from "../../features/slice";
 
 export interface DefaultLayoutProps {
      children: ReactNode;
@@ -19,6 +21,8 @@ export interface DefaultLayoutProps {
 
 export const DefaultLayout: FC<DefaultLayoutProps> = ({ children, pageTitle }) => {
      const dispatch = useDispatch<AppDispatch>();
+     const general = useGeneralSelector();
+
      useLayoutEffect(() => {
           (async () => {
                await dispatch(GetAllCategory());
@@ -26,6 +30,7 @@ export const DefaultLayout: FC<DefaultLayoutProps> = ({ children, pageTitle }) =
                await dispatch(GetAllCarousel());
                await dispatch(GetAllAccommodation());
                await dispatch(GetAllToursTravel());
+               await dispatch(WebContentAction());
           })();
      }, [dispatch]);
      return (
@@ -34,8 +39,8 @@ export const DefaultLayout: FC<DefaultLayoutProps> = ({ children, pageTitle }) =
                     <title>{pageTitle} | DLifeStyle</title>
                </Helmet>
                <Navbar
-                    logoType="string"
-                    logo="DLifeStyle"
+                    logoType="logo"
+                    logo={general?.content?.aboutInfo?.logo}
                     NavLinks={[
                          { displayText: "home", path: "/" },
                          { displayText: "services", path: "/#services" },

@@ -14,6 +14,10 @@ class GeneralServices {
      public async EnquirySend(props: EnquiryFormProps) {
           return await axios.post(`${process.env.REACT_APP_BACKEND}/enquiry`, { ...props });
      }
+
+     public async GetWebContent() {
+          return await axios.get(`${process.env.REACT_APP_BACKEND}/web-content`);
+     }
 }
 
 const GeneralService = new GeneralServices();

@@ -9,13 +9,14 @@ import { useDispatch } from "react-redux";
 import { ContactMeAction } from "../../features/action";
 import { enqueueSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
+import { useGeneralSelector } from "../../features/slice";
 
 export const ContactUsPage = () => {
      const dispatch = useDispatch<AppDispatch>();
+     const general = useGeneralSelector();
      const navigate = useNavigate();
      const handleContactSubmit = async (e: ContactFormProps) => {
           const data = await dispatch(ContactMeAction(e));
-          console.log(data);
           if (data.type === "contact/new/fulfilled") {
                navigate("/", { replace: true });
                return enqueueSnackbar(data.payload, { variant: "success" });
@@ -38,9 +39,7 @@ export const ContactUsPage = () => {
                     <div className="bg-gray-900 bg-opacity-50 w-full h-full flex justify-center items-center">
                          <div className="text-center">
                               <h6 className="text-white uppercase text-4xl font-semibold">Get In Touch</h6>
-                              <p className="text-gray-400 mt-3">
-                                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, ut.
-                              </p>
+                              <p className="text-gray-400 mt-3">{general.content.aboutInfo.slogan}</p>
                          </div>
                     </div>
                </div>
@@ -171,19 +170,23 @@ export const ContactUsPage = () => {
                          <div className="w-[40%] shadow-xl border-2 border-400 mx-auto p-3 rounded-md">
                               <h6 className="text-3xl font-semibold text-gray-900">DLifeStyle Contact Support</h6>
                               <div className="text-lg flex items-center mt-5 whitespace-pre-line">
-                                   Phone : <p className="text-lg">&nbsp;+91 8669026894</p>
+                                   Phone : <p className="text-lg">&nbsp;{general.content.contactInfo.phone}</p>
                               </div>
                               <div className="text-lg flex items-center mt-5">
-                                   Email : <p className="text-lg">&nbsp;dlifestyletc@gmail.com</p>
+                                   Email : <p className="text-lg">&nbsp;{general.content.email}</p>
                               </div>
                               <div className="text-lg flex items-center mt-5">
-                                   Address :{" "}
-                                   <p className="text-lg">&nbsp;3470-S, Delsea Dr, Vineland, New Mexico, 08360</p>
+                                   Address : <p className="text-lg">&nbsp;{general.content.contactInfo.address}</p>
                               </div>
                               <div className="text-lg flex items-center mt-5 gap-3 border-t-2 pt-5 text-center justify-center">
-                                   <AiOutlineFacebook size={30} />
-                                   <AiOutlineInstagram size={30} />
-                                   <AiOutlineLinkedin size={30} />
+                                   <AiOutlineFacebook
+                                        onClick={() => navigate(general.content.contactInfo.fbLink as string)}
+                                        size={30}
+                                   />
+                                   <AiOutlineInstagram
+                                        size={30}
+                                        onClick={() => navigate(general.content.contactInfo.instaLink as string)}
+                                   />
                               </div>
                          </div>
                     </div>
