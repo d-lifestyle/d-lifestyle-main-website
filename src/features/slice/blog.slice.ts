@@ -29,7 +29,7 @@ const BlogSlice = createSlice({
                     state.loading = false;
                })
                .addCase(BlogListAction.pending, (state) => {
-                    state.loading;
+                    state.loading = true;
                })
                .addCase(BlogListAction.rejected, (state, action) => {
                     state.error = action.payload as string;
