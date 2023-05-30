@@ -9,7 +9,7 @@ import { CarouselItem } from "../../component";
 import { AccommodationProps, CarouselProps, CategoriesProps, ToursTravelProps } from "../../interface";
 import { MdShareLocation } from "react-icons/md";
 import { AiOutlineArrowRight } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAccommodationSelector, useCarouselSelector, useCategorySelector, useMainCategorySelector, useToursTravelSelector } from "../../features/slice";
 
 const Months = [
@@ -80,15 +80,16 @@ export const Home = () => {
           {categories.data
 
             ?.filter((x: any) => {
-              return x.parentCategory._id === mainCategory?.data[1]?._id;
+              return x.parentCategory._id === mainCategory?.data[0]?._id;
             })
-            .map(({ name, _id }: CategoriesProps) => (
-              <h6
-                key={_id}
-                className="cursor-pointer bg-white px-5 py-2 rounded-md uppercase hover:text-primary-500 text-sm border-2 duration-300 hover:border-primary-500"
-              >
-                {name}
-              </h6>
+            .map(({ name, _id, parentCategory }: CategoriesProps) => (
+              <Link to={`/accommodation/with-categories/${parentCategory._id}`}>
+                <h6
+                  key={_id}
+                  className="cursor-pointer bg-white px-5 py-2 rounded-md uppercase hover:text-primary-500 text-sm border-2 duration-300 hover:border-primary-500"
+                >
+                  {name}
+                </h6></Link>
             ))}
         </div>
       )}
@@ -116,7 +117,6 @@ export const Home = () => {
               accommodation.data
                 ?.map(
                   ({
-                    SubCategory,
                     city,
                     displayName,
                     state,

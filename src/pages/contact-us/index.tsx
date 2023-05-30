@@ -30,7 +30,7 @@ export const ContactUsPage = () => {
                <div
                     style={{
                          backgroundImage: `url(https://images.pexels.com/photos/14715105/pexels-photo-14715105.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)`,
-                         height: "70vh",
+                         height: "50vh",
                          backgroundPosition: "center",
                          backgroundSize: "cover",
                          backgroundAttachment: "fixed",

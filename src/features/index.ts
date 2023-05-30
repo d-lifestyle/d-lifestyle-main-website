@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
      AccommodationReducer,
+     BlogReducer,
      CarouselReducer,
      CategoryReducer,
      GeneralReducer,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
      toursTravel: ToursTravelReducer,
      mainCategory: MainCategoryReducer,
      general: GeneralReducer,
+     blog: BlogReducer,
 });
 
 const Store = configureStore({

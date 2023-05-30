@@ -9,3 +9,4 @@ export * from "./carousel.interface";
 export * from "./content";
 export * from "./main-category.interface";
 export * from "./general.interface";
+export * from "./blog.interface";
