@@ -1,7 +1,7 @@
 import { CategoriesProps } from "./category.interface";
 
 export interface SubCategoryProps {
-     name: string;
+     displayName: string;
      CategoryId: CategoriesProps;
 
      _id?: string;
@@ -10,7 +10,7 @@ export interface SubCategoryProps {
 }
 
 export interface NewSubCategoryProps {
-     name: string;
+     displayName: string;
      CategoryId: string;
 }
 

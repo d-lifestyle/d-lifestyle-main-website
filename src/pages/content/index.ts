@@ -1,1 +1,3 @@
-export * from "./accommodation-details";
+export * from "./accommodation";
+export * from "./travel-package";
+export * from "./curise";

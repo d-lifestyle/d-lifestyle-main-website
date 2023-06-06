@@ -6,14 +6,3 @@ export interface BlogProps {
      images: string;
      body: string;
 }
-
-export interface NewBlogProps {
-     label: string;
-     images: string;
-     body: string;
-}
-
-export interface UpdateBlogProps {
-     id: string;
-     data: BlogProps;
-}

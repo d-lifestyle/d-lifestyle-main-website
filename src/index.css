@@ -5,11 +5,11 @@
 @tailwind utilities;
 
 .owl-theme {
-     position: relative;
+     position: relative!important;
 }
 
 .owl-nav {
-     position: absolute;
+     position: absolute!important;
      width: 100%;
      top: 50%;
      display: flex;
@@ -30,15 +30,14 @@
      color: #fff;
      font-size: 50px;
      padding: 10px;
-     background-color: rgba(0, 0, 0, 0.5);
      z-index: 50;
 }
 
 .owl-dots {
-     background-color: rgba(0, 0, 0, 0.5);
-     position: absolute;
+     position: absolute!important;
      width: 100%;
      bottom: 0px;
+     left:0px;
      padding-top: 10px;
      padding-bottom: 5px;
 }

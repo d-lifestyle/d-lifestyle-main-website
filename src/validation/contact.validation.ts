@@ -1,22 +1,25 @@
 import * as yup from "yup";
-import { ContactFormProps, NewEnquiryFormProps } from "../interface";
 
-export const ContactInitialValidation: ContactFormProps = {
-     email: "",
-     body: "",
-     name: "",
-     phone: "",
-     placeToVisit: "",
-};
+export interface EnquiryFormProps {
+     dataId: any;
+     checkIn: string;
+     checkOut: string;
+     fullName: string;
+     email: string;
+     phone: string;
+     body?: string;
+     favorite?: boolean;
+     _id?: string;
+     createdAt?: string;
+     updatedAt?: string;
+}
 
-export const ContactValidationSchema = yup.object().shape({
-     email: yup.string().email().required("email is required"),
-     body: yup.string(),
-     message: yup.string().max(50),
-     name: yup.string().required(),
-     phone: yup.string().max(13).required("phone is required"),
-     placeNeedToVisit: yup.string(),
-});
+export interface NewEnquiryFormProps {
+     name: string;
+     email: string;
+     phone: string;
+     body: string;
+}
 
 export const EnquiryInitial: NewEnquiryFormProps = {
      body: "",
