@@ -16,7 +16,7 @@ export const ToursTravelDetails = () => {
           })();
      }, [dispatch, params]);
      return (
-          <MainLayout pageTitle={`${toursTravel.single.displayName} Tours & Travel Details`}>
+          <MainLayout pageTitle={`${toursTravel?.single?.displayName} Tours & Travel Details`}>
                <nav className="flex container mx-auto my-10" aria-label="Breadcrumb">
                     <ol className="inline-flex items-center space-x-1 md:space-x-3">
                          <li className="inline-flex items-center">

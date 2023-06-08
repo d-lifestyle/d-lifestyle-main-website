@@ -108,7 +108,7 @@ export const AccommodationDetails = () => {
                                         to="#"
                                         className="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white"
                                    >
-                                        {accommodation.single.displayName}
+                                        {accommodation?.single?.displayName}
                                    </Link>
                               </div>
                          </li>
@@ -117,7 +117,7 @@ export const AccommodationDetails = () => {
                {accommodation.single?.image?.length > 1 ? (
                     <div className="container mx-auto">
                          <ReactOwlCarousel items={1} autoplay className="owl-theme" loop margin={10} nav>
-                              {accommodation.single.image?.map(({ image, title }, i) => (
+                              {accommodation?.single?.image?.map(({ image, title }, i) => (
                                    <Carousel dataAlt={title} key={title} _id={JSON.stringify(i)} dataImage={image} />
                               ))}
                          </ReactOwlCarousel>
@@ -130,7 +130,7 @@ export const AccommodationDetails = () => {
                <div className="container mx-auto my-10">
                     <div className="my-5">
                          <h6 className="text-2xl capitailize font-semibold">
-                              {accommodation.single.displayName} - {accommodation?.single?.SubCategory?.displayName}
+                              {accommodation?.single?.displayName} - {accommodation?.single?.SubCategory?.displayName}
                          </h6>
                          <div className="flex gap-2 mt-2 text-gray-500 items-center">
                               <IoLocationOutline size={20} className="stroke-primary-500" />

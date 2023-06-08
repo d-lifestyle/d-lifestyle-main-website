@@ -20,7 +20,7 @@ import {
      useTourPackageSelector,
 } from "../../redux";
 import { ListCarouselAction } from "../../redux/action/carousel.action";
-import { AccommodationItem, Carousel, TitleItem, ToursTravelItem } from "../../component";
+import { AccommodationItem, Carousel, CruiseItem, RentalItem, TitleItem, ToursTravelItem } from "../../component";
 import { Link } from "react-router-dom";
 
 export const Home = () => {
@@ -45,7 +45,7 @@ export const Home = () => {
                await dispatch(ListRentalAction());
           })();
      }, [dispatch]);
-
+     console.log(rental.data);
      return (
           <MainLayout pageTitle="Best travel community in india">
                {/* Carousel */}
@@ -100,7 +100,7 @@ export const Home = () => {
                                                   <AccommodationItem
                                                        _id={_id as string}
                                                        displayName={displayName}
-                                                       image={image[0].image}
+                                                       image={image[0]?.image}
                                                        place={`${city}, ${state}`}
                                                   />
                                              </div>
@@ -152,7 +152,7 @@ export const Home = () => {
                <div className="px-5 my-20">
                     {cruise.data.length > 0 ? (
                          <div className="">
-                              <TitleItem path="tours-package" title="Tours & Packages" />
+                              <TitleItem path="cruise" title="Cruise" />
                               <div className="grid grid-cols-12 gap-5 px-5 my-10">
                                    {cruise.data
                                         .map(
@@ -166,15 +166,17 @@ export const Home = () => {
                                                   sailingType,
                                                   _id,
                                              }) => (
-                                                  <ToursTravelItem
-                                                       key={_id}
-                                                       _id={_id as string}
-                                                       displayName={displayName}
-                                                       duration={`${itinerary}`}
-                                                       image={image}
-                                                       place={`${departure.from} ${departure.to}`}
-                                                       theme={`theme`}
-                                                  />
+                                                  <div className="col-span-12 xl:col-span-4 lg:col-span-4 md:col-span-6 sm:col-span-12">
+                                                       <CruiseItem
+                                                            key={_id}
+                                                            _id={_id as string}
+                                                            displayName={displayName}
+                                                            image={image}
+                                                            itinerary={itinerary}
+                                                            sailingType={sailingType}
+                                                            departure={`${departure.from} - ${departure.to}`}
+                                                       />
+                                                  </div>
                                              )
                                         )
                                         .splice(0, 6)}
@@ -190,21 +192,23 @@ export const Home = () => {
                </div>
                {/* Rental */}
                <div className="px-5 my-20">
-                    {rental.data.length > 0 ? (
+                    {rental?.data?.length > 0 ? (
                          <div className="">
-                              <TitleItem path="tours-package" title="Tours & Packages" />
+                              <TitleItem path="tours-package" title="car rentals" />
                               <div className="grid grid-cols-12 gap-5 px-5 my-10">
-                                   {rental.data
-                                        .map(({ carRentalName, image, location, options, peopleAllowed, _id }) => (
-                                             <ToursTravelItem
-                                                  key={_id}
-                                                  _id={_id as string}
-                                                  displayName={carRentalName}
-                                                  duration={`${options}`}
-                                                  image={image[0].image}
-                                                  place={`${location.from} ${location.to}`}
-                                                  theme={peopleAllowed}
-                                             />
+                                   {rental?.data
+                                        ?.map(({ carRentalName, image, location, options, peopleAllowed, _id }) => (
+                                             <div className="col-span-12 xl:col-span-4 lg:col-span-4 md:col-span-6 sm:col-span-12">
+                                                  <RentalItem
+                                                       key={_id}
+                                                       _id={_id as string}
+                                                       displayName={carRentalName}
+                                                       image={image[0]?.image}
+                                                       location={`${location.from} ${location.to}`}
+                                                       options={options}
+                                                       peopleNo={peopleAllowed}
+                                                  />
+                                             </div>
                                         ))
                                         .splice(0, 6)}
                               </div>
