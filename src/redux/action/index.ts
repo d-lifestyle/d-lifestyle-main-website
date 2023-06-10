@@ -7,3 +7,4 @@ export * from "./tours-package.action";
 export * from "./cruise.action";
 export * from "./rental.action";
 export * from "./blog.action";
+export * from "./content.action";

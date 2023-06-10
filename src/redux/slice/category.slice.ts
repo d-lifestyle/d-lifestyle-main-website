@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 
 const InitialState: DataStateProps<CategoriesProps> = {
-     data: {} as CategoriesProps[],
+     data: [] as CategoriesProps[],
      error: "",
      loading: false,
      single: {} as CategoriesProps,

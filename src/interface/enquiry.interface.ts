@@ -4,7 +4,7 @@ export interface ContactFormProps {
      phone: string;
      placeToVisit?: string;
      body?: string;
-     favorite: boolean;
+     favorite?: boolean;
 }
 
 export interface EnquiryFormProps {

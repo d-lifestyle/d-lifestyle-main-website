@@ -3,7 +3,7 @@ import { MainLayout } from "../../layout";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-import { useDispatch } from "react-redux";
+import { batch, useDispatch } from "react-redux";
 import {
      AppDispatch,
      ListAccommodationAction,
@@ -36,23 +36,24 @@ export const Home = () => {
 
      useEffect(() => {
           (async () => {
-               await dispatch(ListCarouselAction());
-               await dispatch(ListAccommodationAction());
-               await dispatch(ListToursPackageAction());
-               await dispatch(ListSubCategoryAction());
-               await dispatch(ListCategoryAction());
-               await dispatch(ListCruiseAction());
-               await dispatch(ListRentalAction());
+               batch(async () => {
+                    await dispatch(ListCarouselAction());
+                    await dispatch(ListAccommodationAction());
+                    await dispatch(ListToursPackageAction());
+                    await dispatch(ListSubCategoryAction());
+                    await dispatch(ListCategoryAction());
+                    await dispatch(ListCruiseAction());
+                    await dispatch(ListRentalAction());
+               });
           })();
      }, [dispatch]);
-     console.log(rental.data);
      return (
           <MainLayout pageTitle="Best travel community in india">
                {/* Carousel */}
                <div>
-                    {carousel.data.length !== 0 ? (
+                    {carousel?.data?.length > 0 ? (
                          <OwlCarousel items={1} autoplay className="owl-theme" loop margin={10} nav>
-                              {carousel?.data.map(({ dataAlt, dataImage, _id }) => (
+                              {carousel?.data?.map(({ dataAlt, dataImage, _id }) => (
                                    <Carousel dataAlt={dataAlt} key={_id} _id={_id as string} dataImage={dataImage} />
                               ))}
                          </OwlCarousel>
@@ -65,14 +66,14 @@ export const Home = () => {
                {/* Carousel */}
 
                {/* Category */}
-               {category.data.length ? (
+               {category?.data?.length > 0 ? (
                     <div className="mt-20 container mx-auto text-center">
                          <TitleItem path="" title="tour categories" />
                          <div className="flex flex-wrap justify-center mt-5">
-                              {category.data.map(({ displayName, _id }) => (
+                              {category?.data?.map(({ displayName, _id }, i) => (
                                    <Link
                                         to={`${displayName}/${_id}`}
-                                        key={_id}
+                                        key={i}
                                         className="underline uppercase text-sm px-5 py-2"
                                    >
                                         {displayName}
@@ -89,13 +90,13 @@ export const Home = () => {
 
                {/* Accommodation */}
                <div className="px-5 my-20">
-                    {accommodation.data.length > 0 ? (
+                    {accommodation?.data?.length > 0 ? (
                          <div className="">
-                              <TitleItem path={`/accommodation/647dff591422a103807e619f`} title="Accommodation" />
+                              <TitleItem path={`/accommodation/${category?.data[0]?._id}`} title="Accommodation" />
 
                               <div className="grid grid-cols-12 gap-5 px-5 my-10">
-                                   {accommodation.data
-                                        .map(({ image, displayName, city, state, _id }) => (
+                                   {accommodation?.data
+                                        ?.map(({ image, displayName, city, state, _id }) => (
                                              <div className="col-span-12 xl:col-span-4 lg:col-span-4 md:col-span-6 sm:col-span-12">
                                                   <AccommodationItem
                                                        _id={_id as string}
@@ -120,12 +121,12 @@ export const Home = () => {
 
                {/* Tours travel */}
                <div className="px-5 my-20">
-                    {toursPackage.data.length > 0 ? (
+                    {toursPackage?.data?.length > 0 ? (
                          <div className="">
-                              <TitleItem path="tours-package" title="Tours & Packages" />
+                              <TitleItem path={`/tours-package/${category?.data[1]?._id}`} title="Tours & Packages" />
                               <div className="grid grid-cols-12 gap-5 px-5 my-10">
-                                   {toursPackage.data
-                                        .map(({ displayName, image, place, _id, duration, theme }) => (
+                                   {toursPackage?.data
+                                        ?.map(({ displayName, image, place, _id, duration, theme }) => (
                                              <ToursTravelItem
                                                   key={_id}
                                                   _id={_id as string}
@@ -150,12 +151,15 @@ export const Home = () => {
 
                {/* Cruise */}
                <div className="px-5 my-20">
-                    {cruise.data.length > 0 ? (
+                    {cruise?.data?.length > 0 ? (
                          <div className="">
-                              <TitleItem path="cruise" title="Cruise" />
+                              <TitleItem
+                                   path={`/cruise/${category?.data.length ? category.data[2]._id : "test"}`}
+                                   title="Cruise"
+                              />
                               <div className="grid grid-cols-12 gap-5 px-5 my-10">
-                                   {cruise.data
-                                        .map(
+                                   {cruise?.data
+                                        ?.map(
                                              ({
                                                   SubCategory,
                                                   departure,

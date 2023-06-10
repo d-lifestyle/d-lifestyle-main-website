@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 
 const InitialState: DataStateProps<AccommodationProps> = {
-     data: {} as AccommodationProps[],
+     data: [] as AccommodationProps[],
      error: "",
      loading: false,
      single: {} as AccommodationProps,

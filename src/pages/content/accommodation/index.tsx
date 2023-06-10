@@ -19,13 +19,16 @@ export const Accommodation = () => {
      const params = useParams();
 
      const GetListCategory = useCallback(async () => {
-          await dispatch(ListSubCategoryByCategoryIdAction(params.id as string));
+          await dispatch(ListCategoryAction());
+          if (params.id) {
+               await dispatch(ListSubCategoryByCategoryIdAction(params.id as string));
+          }
      }, [dispatch]);
 
      useEffect(() => {
           (async () => {
                await GetListCategory();
-               dispatch(ListAccommodationAction());
+               await dispatch(ListAccommodationAction());
           })();
      }, [dispatch]);
 

@@ -1,10 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MainLayout } from "../../../layout";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import {
+     ListCruiseAction,
+     ListSubCategoryByCategoryIdAction,
+     useAppDispatch,
+     useCruiseSelector,
+     useSubCategorySelector,
+} from "../../../redux";
+import { CruiseItem } from "../../../component";
 
 export const Cruise = () => {
+     const cruise = useCruiseSelector();
+     const dispatch = useAppDispatch();
+     const subCategory = useSubCategorySelector();
+     const params = useParams();
+
+     useEffect(() => {
+          (async () => {
+               await dispatch(ListCruiseAction());
+               if (params.id) {
+                    await dispatch(ListSubCategoryByCategoryIdAction(params.id as string));
+               }
+          })();
+     }, [dispatch]);
+
      return (
-          <MainLayout pageTitle="Travel package">
+          <MainLayout pageTitle="accommodation list">
                <nav className="flex container mx-auto my-10" aria-label="Breadcrumb">
                     <ol className="inline-flex items-center space-x-1 md:space-x-3">
                          <li className="inline-flex items-center">
@@ -45,7 +67,66 @@ export const Cruise = () => {
                          </li>
                     </ol>
                </nav>
-               Cruise page
+
+               <div className="flex gap-3 px-5 flex-wrap">
+                    {subCategory.otherData.length > 1 ? (
+                         <div className="w-[300px] p-3 shadow-xl border">
+                              <h6 className="text-lg uppercase">select filter</h6>
+                              <div className="flex flex-col gap-3 mt-5">
+                                   {subCategory?.otherData?.map(({ displayName }: any) => (
+                                        <div>
+                                             <label className="uppercase flex items-center gap-2">
+                                                  <input
+                                                       type="checkbox"
+                                                       className="accent-primary-500 rounded-full h-5 w-5"
+                                                  />
+                                                  <span className="text-sm">{displayName}</span>
+                                             </label>
+                                        </div>
+                                   ))}
+                              </div>
+                         </div>
+                    ) : (
+                         <div>No Filter Options found!</div>
+                    )}
+                    <div className="flex-1">
+                         {cruise?.data?.length !== 0 && (
+                              <div className="grid grid-cols-12 gap-5">
+                                   {cruise?.data?.map(
+                                        ({
+                                             displayName,
+                                             _id,
+                                             image,
+                                             SubCategory,
+                                             departure,
+                                             description,
+                                             itinerary,
+                                             sailingType,
+                                        }) => (
+                                             <div
+                                                  key={_id}
+                                                  className="col-span-12 xl:col-span-4 lg:col-span-4 md:col-span-6 sm:col-span-12"
+                                             >
+                                                  <CruiseItem
+                                                       _id={_id as string}
+                                                       displayName={displayName}
+                                                       image={image}
+                                                       departure={`${departure.from} ${departure.to}`}
+                                                       itinerary={itinerary}
+                                                       sailingType={sailingType}
+                                                  />
+                                             </div>
+                                        )
+                                   )}
+                              </div>
+                         )}
+                         {cruise.data.length === 0 && (
+                              <div className="col-span-12 shadow-xl py-5 border">
+                                   <h6 className="text-xl text-primary-500 uppercase text-center">No cruise found!</h6>
+                              </div>
+                         )}
+                    </div>
+               </div>
           </MainLayout>
      );
 };

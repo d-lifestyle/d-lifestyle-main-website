@@ -5,3 +5,4 @@ export * from "./sub-category.slice";
 export * from "./carousel.slice";
 export * from "./cruise.slice";
 export * from "./rental.slice";
+export * from "./content.slice";

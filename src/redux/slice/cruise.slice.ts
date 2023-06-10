@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 
 const InitialState: DataStateProps<CruisePackageProps> = {
-     data: {} as CruisePackageProps[],
+     data: [] as CruisePackageProps[],
      error: "",
      loading: false,
      single: {} as CruisePackageProps,

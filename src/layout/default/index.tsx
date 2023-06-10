@@ -1,6 +1,7 @@
 import React, { FC, ReactNode, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { Navbar } from "../nav-bar";
+import { GetAdminContentAction, useAppDispatch, useContentSelector } from "../../redux";
 
 export interface MainLayoutProps {
      children: ReactNode;
@@ -8,9 +9,14 @@ export interface MainLayoutProps {
 }
 
 export const MainLayout: FC<MainLayoutProps> = ({ children, pageTitle }) => {
+     const dispatch = useAppDispatch();
+     const content = useContentSelector();
      useEffect(() => {
           window.scrollTo(0, 0);
-     }, []);
+          (async () => {
+               await dispatch(GetAdminContentAction());
+          })();
+     }, [dispatch]);
 
      return (
           <div className="">
@@ -18,7 +24,7 @@ export const MainLayout: FC<MainLayoutProps> = ({ children, pageTitle }) => {
                     <title>{pageTitle} | DLifeStyle</title>
                </Helmet>
                <Navbar
-                    logo="https://png.pngtree.com/png-clipart/20220806/ourmid/pngtree-bearded-man-logo-png-image_6100735.png"
+                    logo={content?.data?.aboutInfo?.logo}
                     logoType="logo"
                     NavLinks={[
                          {
