@@ -4,3 +4,4 @@ export * from "./not-found";
 export * from "./content";
 export * from "./details";
 export * from "./about";
+export * from "./flight";

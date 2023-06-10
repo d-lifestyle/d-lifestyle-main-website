@@ -5,6 +5,7 @@ import {
      AccommodationDetails,
      Contact,
      Cruise,
+     Flight,
      Home,
      NotFound,
      Rental,
@@ -20,6 +21,7 @@ export default function App() {
                <Route path="/tours-package/:id" element={<ToursPackage />} />
                <Route path="/cruise/:id" element={<Cruise />} />
                <Route path="/rental/:id" element={<Rental />} />
+               <Route path="/flight" element={<Flight />} />
 
                <Route path="/accommodation-details/:id" element={<AccommodationDetails />} />
                <Route path="/tours-travel-details/:id" element={<ToursTravelDetails />} />

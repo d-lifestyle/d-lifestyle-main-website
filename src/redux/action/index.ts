@@ -8,3 +8,4 @@ export * from "./cruise.action";
 export * from "./rental.action";
 export * from "./blog.action";
 export * from "./content.action";
+export * from "./flight.action";

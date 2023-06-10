@@ -8,3 +8,4 @@ export * from "./carousel.interface";
 export * from "./cruise.interface";
 export * from "./rental.interface";
 export * from "./blog.interface";
+export * from "./flight.interface";

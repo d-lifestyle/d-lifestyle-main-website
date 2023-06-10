@@ -79,6 +79,9 @@ export const Home = () => {
                                         {displayName}
                                    </Link>
                               ))}
+                              <Link to={`/flight`} className="underline uppercase text-sm px-5 py-2">
+                                   flights
+                              </Link>
                          </div>
                     </div>
                ) : (

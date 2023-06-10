@@ -13,7 +13,7 @@ import { Formik } from "formik";
 import { ContactFormSchema, InitialContactForm } from "../../validation/contact.validation";
 import { ContactFormProps } from "../../interface";
 import { enqueueSnackbar } from "notistack";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Contact = () => {
      const dispatch = useAppDispatch();
@@ -68,7 +68,9 @@ export const Contact = () => {
                                    <div className="flex gap-3 flex-col mt-5">
                                         <div className="flex gap-3 items-center text-gray-800">
                                              <AiFillFacebook size={30} />
-                                             <p className="">{content?.data?.contactInfo?.fbLink}</p>
+                                             <Link to={`${content?.data?.contactInfo?.fbLink}`}>
+                                                  <p className="">{content?.data?.contactInfo?.fbLink}</p>
+                                             </Link>
                                         </div>
                                         <div className="flex gap-3 items-center text-gray-800">
                                              <AiFillInstagram size={30} />
