@@ -114,7 +114,7 @@ export const AccommodationDetails = () => {
                          </li>
                     </ol>
                </nav>
-               {accommodation.single?.image?.length > 1 ? (
+               {accommodation.single?.image?.length > 0 ? (
                     <div className="container mx-auto">
                          <ReactOwlCarousel items={1} autoplay className="owl-theme" loop margin={10} nav>
                               {accommodation?.single?.image?.map(({ image, title }, i) => (
@@ -124,7 +124,7 @@ export const AccommodationDetails = () => {
                     </div>
                ) : (
                     <div className="col-span-12">
-                         <h6 className="text-xl text-primary-500 uppercase text-center">No images found!</h6>
+                         <h6 className="text-xl text-primary-500 uppercase text-center">No images were found!</h6>
                     </div>
                )}
                <div className="container mx-auto my-10">
