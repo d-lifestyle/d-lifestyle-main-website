@@ -58,6 +58,10 @@ export const AccommodationDetails = () => {
           }
      };
 
+     const FilterByCategory = (filter: string) => {
+          console.log(filter);
+     };
+
      return (
           <MainLayout pageTitle="Accommodation details">
                <nav className="flex container mx-auto my-10" aria-label="Breadcrumb">

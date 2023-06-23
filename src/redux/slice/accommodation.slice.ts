@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AccommodationProps, DataStateProps } from "../../interface";
-import { ListAccommodationAction, ListAccommodationByIdAction } from "../action";
+import { ListAccommodationAction, ListAccommodationByIdAction, ListAccommodationBySubCategoryAction } from "../action";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 
@@ -37,6 +37,17 @@ const AccommodationSlice = createSlice({
                })
                .addCase(ListAccommodationByIdAction.rejected, (state, action) => {
                     state.error = action.payload as string;
+               });
+          builder
+               .addCase(ListAccommodationBySubCategoryAction.fulfilled, (state, action) => {
+                    state.data = action.payload.data;
+                    state.loading = false;
+               })
+               .addCase(ListAccommodationBySubCategoryAction.pending, (state) => {
+                    state.loading = true;
+               })
+               .addCase(ListAccommodationBySubCategoryAction.rejected, (state, action) => {
+                    state.error = (action.payload as any).data as string;
                });
      },
 });

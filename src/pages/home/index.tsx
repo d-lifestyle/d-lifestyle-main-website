@@ -95,7 +95,7 @@ export const Home = () => {
                <div className="px-5 my-20">
                     {accommodation?.data?.length > 0 ? (
                          <div className="">
-                              <TitleItem path={`/accommodation/${category?.data[0]?._id}`} title="Accommodation" />
+                              <TitleItem path={`/accommodations/${category?.data[0]?._id}`} title="Accommodation" />
 
                               <div className="grid grid-cols-12 gap-5 px-5 my-10">
                                    {accommodation?.data

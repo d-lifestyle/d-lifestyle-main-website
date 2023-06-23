@@ -29,3 +29,19 @@ export const ListAccommodationByIdAction = createAsyncThunk(
           }
      }
 );
+
+export const ListAccommodationBySubCategoryAction = createAsyncThunk(
+     "accommodation/sub-category",
+     async (categoryId: string, { rejectWithValue }) => {
+          try {
+               const data = await AccommodationService.FilterBySubCategoryId(categoryId);
+               return await data.data;
+          } catch (err: any) {
+               if (err.response) {
+                    return rejectWithValue(err.response.data.message);
+               } else {
+                    return rejectWithValue(err.message);
+               }
+          }
+     }
+);

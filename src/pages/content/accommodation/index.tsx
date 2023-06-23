@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { MainLayout } from "../../../layout";
 import {
      ListAccommodationAction,
+     ListAccommodationBySubCategoryAction,
      ListCategoryAction,
      ListCategoryByIdAction,
      ListSubCategoryByCategoryIdAction,
@@ -10,13 +11,16 @@ import {
      useSubCategorySelector,
 } from "../../../redux";
 import { AccommodationItem } from "../../../component";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { Pagination } from "../../../component/default/pagination";
 
 export const Accommodation = () => {
      const accommodation = useAccommodationSelector();
      const subCategory = useSubCategorySelector();
      const dispatch = useAppDispatch();
      const params = useParams();
+     const navigate = useNavigate();
+     const [filter, setFilter] = useState<any>();
 
      const GetListCategory = useCallback(async () => {
           await dispatch(ListCategoryAction());
@@ -31,6 +35,16 @@ export const Accommodation = () => {
                await dispatch(ListAccommodationAction());
           })();
      }, [dispatch]);
+
+     const handleFilter = async (e: string) => {
+          if (e.length) {
+               setFilter(e);
+               await dispatch(ListAccommodationBySubCategoryAction(filter));
+          } else {
+               setFilter("");
+               await dispatch(ListAccommodationAction());
+          }
+     };
 
      return (
           <MainLayout pageTitle="accommodation list">
@@ -75,52 +89,77 @@ export const Accommodation = () => {
                     </ol>
                </nav>
 
-               <div className="flex gap-3 px-5 flex-wrap">
-                    {subCategory.otherData.length > 1 ? (
-                         <div className="w-[300px] p-3 shadow-xl border">
-                              <h6 className="text-lg uppercase">select filter</h6>
-                              <div className="flex flex-col gap-3 mt-5">
-                                   {subCategory?.otherData?.map(({ displayName }: any) => (
-                                        <div>
-                                             <label className="uppercase flex items-center gap-2">
-                                                  <input
-                                                       type="checkbox"
-                                                       className="accent-primary-500 rounded-full h-5 w-5"
-                                                  />{" "}
-                                                  <span className="text-sm">{displayName}</span>
-                                             </label>
-                                        </div>
-                                   ))}
+               <div className="grid grid-cols-5 divide-x-2 gap-5 px-5 h-[70vh]">
+                    <div className="col-span-3 xl:col-span-1 py-10 border shadow-xl px-5 lg:col-span-1 md:col-span-1 sm:col-span-3 xs:col-span-1">
+                         {subCategory.data.length > 0 && (
+                              <div>
+                                   <h6 className="mb-3 uppercase">select filter</h6>
+                                   <ul>
+                                        {subCategory.otherData.map(({ displayName, _id }: any) => (
+                                             <li key={_id}>
+                                                  <label htmlFor={displayName} className="flex items-center">
+                                                       <input
+                                                            id={displayName}
+                                                            type="checkbox"
+                                                            value={filter}
+                                                            checked={filter === _id}
+                                                            onChange={() => handleFilter(_id)}
+                                                            name={_id}
+                                                            className="accent-primary-500 rounded-full h-4 w-4"
+                                                       />
+                                                       <span className="ml-2 capitalize">{displayName}</span>
+                                                  </label>
+                                             </li>
+                                        ))}
+                                   </ul>
                               </div>
+                         )}
+                    </div>
+                    <div className="py-10 px-5 col-span-3 xl:col-span-4 lg:col-span-4 md:col-span-4 sm:col-span-3 xs:col-span-1">
+                         <h6 className="mb-3 text-ls uppercase">Accommodations</h6>
+                         <div className="overflow-y-scroll h-full py-3">
+                              {accommodation.data.length > 0 && (
+                                   <div className="flex flex-col gap-10">
+                                        {accommodation.data.map(
+                                             ({ SubCategory, city, description, displayName, image, state, _id }) => (
+                                                  <div className="flex flex-col bg-white border border-gray-200 shadow-xl md:flex-row hover:bg-gray-100  h-[200px] dark:hover:bg-gray-100 w-full justify-between group space-between">
+                                                       <div className="flex gap-3 items-center">
+                                                            <img
+                                                                 className="object-cover w-full h-full md:w-48 "
+                                                                 src={image[0].image}
+                                                                 alt={image[0].title}
+                                                            />
+                                                            <div className="flex flex-col p-4 leading-normal">
+                                                                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 group-hover:text-primary-500">
+                                                                      {displayName}
+                                                                 </h5>
+                                                                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                                                                      {city}, {state}
+                                                                 </p>
+                                                                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                                                                      Best for {SubCategory.displayName}
+                                                                 </p>
+                                                            </div>
+                                                       </div>
+                                                       <div className="px-10 py-5 flex items-center">
+                                                            <button
+                                                                 type="button"
+                                                                 onClick={() =>
+                                                                      navigate(`/accommodation-details/${_id}`)
+                                                                 }
+                                                                 className="bg-primary-500 px-5 py-3"
+                                                            >
+                                                                 <span className="text-white text-sm uppercase">
+                                                                      View details
+                                                                 </span>
+                                                            </button>
+                                                       </div>
+                                                  </div>
+                                             )
+                                        )}
+                                   </div>
+                              )}
                          </div>
-                    ) : (
-                         <div>No Filter Options found!</div>
-                    )}
-                    <div className="flex-1">
-                         {accommodation?.data?.length !== 0 && (
-                              <div className="grid grid-cols-12 gap-5">
-                                   {accommodation?.data?.map(({ displayName, _id, image, city, state }) => (
-                                        <div
-                                             key={_id}
-                                             className="col-span-12 xl:col-span-4 lg:col-span-4 md:col-span-6 sm:col-span-12"
-                                        >
-                                             <AccommodationItem
-                                                  _id={_id as string}
-                                                  displayName={displayName}
-                                                  image={image[0].image}
-                                                  place={`${city} ${state}`}
-                                             />
-                                        </div>
-                                   ))}
-                              </div>
-                         )}
-                         {accommodation.data.length === 0 && (
-                              <div className="col-span-12 shadow-xl py-5 border">
-                                   <h6 className="text-xl text-primary-500 uppercase text-center">
-                                        No accommodation found!
-                                   </h6>
-                              </div>
-                         )}
                     </div>
                </div>
           </MainLayout>
